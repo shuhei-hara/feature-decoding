@@ -1,0 +1,219 @@
+# CV feature decoding
+
+decoder:
+  name: deco_fmriprep_pyfastl2lir
+  path: /flash/DoyaU/shuhei/decoding_alexnet
+  parameters:
+    alpha: 100
+    chunk_axis: 1
+
+  fmri:
+    name: decodertraining_fmap_volume_standard_prep
+    subjects:
+      - name: sub-DI
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/DI_${decoder.fmri.name}.h5
+      - name: sub-FA
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/FA_${decoder.fmri.name}.h5
+      - name: sub-HH
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/HH_${decoder.fmri.name}.h5
+      - name: sub-HK
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/HK_${decoder.fmri.name}.h5
+      - name: sub-HM
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/HM_${decoder.fmri.name}.h5
+      - name: sub-KH
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/KH_${decoder.fmri.name}.h5
+      - name: sub-KT
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/KT_${decoder.fmri.name}.h5
+      - name: sub-MF
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/MF_${decoder.fmri.name}.h5
+      - name: sub-MN
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/MN_${decoder.fmri.name}.h5
+      - name: sub-MOt
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/MOt_${decoder.fmri.name}.h5
+      - name: sub-MY
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/MY_${decoder.fmri.name}.h5
+      - name: sub-MYa
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/MYa_${decoder.fmri.name}.h5
+      - name: sub-NK
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/NK_${decoder.fmri.name}.h5
+      - name: sub-NKu
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/NKu_${decoder.fmri.name}.h5
+      - name: sub-RM
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/RM_${decoder.fmri.name}.h5
+      - name: sub-SK
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/SK_${decoder.fmri.name}.h5
+      - name: sub-SY
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/SY_${decoder.fmri.name}.h5
+      - name: sub-TK
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/TK_${decoder.fmri.name}.h5
+      - name: sub-TN
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/TN_${decoder.fmri.name}.h5
+      - name: sub-TY
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/TY_${decoder.fmri.name}.h5
+      - name: sub-YA
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/YA_${decoder.fmri.name}.h5
+
+    rois:
+      - {name: V1,  select: ROI_standard_V1 = 1,  num: 500}
+      - {name: V2,  select: ROI_standard_V2 = 1,  num: 500}
+      - {name: V3,  select: ROI_standard_V3 = 1,  num: 500}
+      - {name: V4, select: ROI_standard_V4 = 1, num: 500}
+      - {name: LOC, select: ROI_standard_LOC = 1, num: 500}
+      - {name: FFA, select: ROI_standard_FFA = 1, num: 500}
+      - {name: PPA, select: ROI_standard_PPA = 1, num: 500}
+      # - {name: LVC, select: ROI_standard_LVC = 1, num: 500}
+      # - {name: HVC, select: ROI_standard_HVC = 1, num: 500}
+      # - {name: VC,  select: ROI_standard_VC = 1,  num: 500}
+    label_key: stimulus_name
+
+  features:
+    name: Alexnet
+    paths:
+      - /flash/DoyaU/shuhei/bdata_decoding/features
+    layers:
+      - conv1
+      - conv2
+      - conv3
+      - conv4
+      - conv5
+      - fc6
+      - fc7
+      - fc8
+    index_file: /home/s/shuhei-hara1/workspace/decoding_bdata/feature_index_random1000.mat
+
+decoded_feature:
+  name: deco_fmriprep_pyfastl2lir
+  path: /flash/DoyaU/shuhei/decoding_alexnet/Alexnet
+  parameters:
+    average_sample: true
+
+  decoder:
+    name: ${decoder.features.name}
+    path: /flash/DoyaU/shuhei/decoding_alexnet
+    parameters:
+      alpha: ${decoder.parameters.alpha}
+      chunk_axis: ${decoder.parameters.chunk_axis}
+
+  fmri:
+    name: bayes_fmap_volume_standard_prep
+    subjects:
+      - name: sub-DI
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/DI_${decoded_feature.fmri.name}.h5
+      - name: sub-FA
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/FA_${decoded_feature.fmri.name}.h5
+      - name: sub-HH
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/HH_${decoded_feature.fmri.name}.h5
+      - name: sub-HK
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/HK_${decoded_feature.fmri.name}.h5
+      - name: sub-HM
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/HM_${decoded_feature.fmri.name}.h5
+      - name: sub-KH
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/KH_${decoded_feature.fmri.name}.h5
+      - name: sub-KT
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/KT_${decoded_feature.fmri.name}.h5
+      - name: sub-MF
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/MF_${decoded_feature.fmri.name}.h5
+      - name: sub-MN
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/MN_${decoded_feature.fmri.name}.h5
+      - name: sub-MOt
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/MOt_${decoded_feature.fmri.name}.h5
+      - name: sub-MY
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/MY_${decoded_feature.fmri.name}.h5
+      - name: sub-MYa
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/MYa_${decoded_feature.fmri.name}.h5
+      - name: sub-NK
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/NK_${decoded_feature.fmri.name}.h5
+      - name: sub-NKu
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/NKu_${decoded_feature.fmri.name}.h5
+      - name: sub-RM
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/RM_${decoded_feature.fmri.name}.h5
+      - name: sub-SK
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/SK_${decoded_feature.fmri.name}.h5
+      - name: sub-SY
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/SY_${decoded_feature.fmri.name}.h5
+      - name: sub-TK
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/TK_${decoded_feature.fmri.name}.h5
+      - name: sub-TN
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/TN_${decoded_feature.fmri.name}.h5
+      - name: sub-TY
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/TY_${decoded_feature.fmri.name}.h5
+      - name: sub-YA
+        paths:
+          - /flash/DoyaU/shuhei/bdata_decoding/test/YA_${decoded_feature.fmri.name}.h5
+    rois:
+      - {name: V1,  select: ROI_standard_V1 = 1}
+      - {name: V2,  select: ROI_standard_V2 = 1}
+      - {name: V3,  select: ROI_standard_V3 = 1}
+      - {name: V4, select: ROI_standard_V4 = 1}
+      - {name: LOC, select: ROI_standard_LOC = 1}
+      - {name: FFA, select: ROI_standard_FFA = 1}
+      - {name: PPA, select: ROI_standard_PPA = 1}
+      # - {name: LVC, select: ROI_LVC = 1}
+      # - {name: HVC, select: ROI_HVC = 1}
+      # - {name: VC,  select: ROI_VC = 1}
+    label_key: stimulus_name
+    exclude_labels:
+
+  features:
+    name: Alexnet
+    paths:
+      - /flash/DoyaU/shuhei/bdata_decoding/features_test_original
+    layers:
+      - conv1
+      - conv2
+      - conv3
+      - conv4
+      - conv5
+      - fc6
+      - fc7
+      - fc8
+
+  # In each CV fold, the training samples are removed if they have overlapping 
+  # values of `cv exclusive key` with the test samples so that the training and
+  # test samples do not have overlapping values for `cv exclusive key`.
+  # Set `null` if not specified.
+  #
+  exclusive_key: category_index
+
+subject: null
