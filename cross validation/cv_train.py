@@ -8,7 +8,6 @@ import os
 import shutil
 from time import time
 import warnings
-import pickle
 
 import bdpy
 from bdpy.bdata.utils import select_data_multi_bdatas, get_labels_multi_bdatas
@@ -23,7 +22,6 @@ from fastl2lir import FastL2LiR
 import numpy as np
 import yaml
 
-# do : module load python/3.11.4
 
 # Main #######################################################################
 
@@ -185,9 +183,6 @@ def featdec_cv_fastl2lir_train(
             feat_labels = np.array(feat_labels)[train_index]
 
             feat_train = feat
-
-            # print('feat_train: ', feat_train.shape)
-            # return
 
             print('Elapsed time (data preparation): %f' % (time() - start_time))
 
