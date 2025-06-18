@@ -2,7 +2,7 @@
 
 decoder:
   name: deco_fmriprep_pyfastl2lir
-  path: /flash/DoyaU/shuhei/decoding_alexnet
+  path: # path
   parameters:
     alpha: 100
     chunk_axis: 1
@@ -10,69 +10,16 @@ decoder:
   fmri:
     name: decodertraining_fmap_volume_standard_prep
     subjects:
-      - name: sub-DI
+      - name: sub-A
         paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/DI_${decoder.fmri.name}.h5
-      - name: sub-FA
+          - .../A_${decoder.fmri.name}.h5
+      - name: sub-B
         paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/FA_${decoder.fmri.name}.h5
-      - name: sub-HH
+          - .../B_${decoder.fmri.name}.h5
+      - name: sub-C
         paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/HH_${decoder.fmri.name}.h5
-      - name: sub-HK
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/HK_${decoder.fmri.name}.h5
-      - name: sub-HM
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/HM_${decoder.fmri.name}.h5
-      - name: sub-KH
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/KH_${decoder.fmri.name}.h5
-      - name: sub-KT
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/KT_${decoder.fmri.name}.h5
-      - name: sub-MF
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/MF_${decoder.fmri.name}.h5
-      - name: sub-MN
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/MN_${decoder.fmri.name}.h5
-      - name: sub-MOt
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/MOt_${decoder.fmri.name}.h5
-      - name: sub-MY
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/MY_${decoder.fmri.name}.h5
-      - name: sub-MYa
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/MYa_${decoder.fmri.name}.h5
-      - name: sub-NK
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/NK_${decoder.fmri.name}.h5
-      - name: sub-NKu
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/NKu_${decoder.fmri.name}.h5
-      - name: sub-RM
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/RM_${decoder.fmri.name}.h5
-      - name: sub-SK
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/SK_${decoder.fmri.name}.h5
-      - name: sub-SY
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/SY_${decoder.fmri.name}.h5
-      - name: sub-TK
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/TK_${decoder.fmri.name}.h5
-      - name: sub-TN
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/TN_${decoder.fmri.name}.h5
-      - name: sub-TY
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/TY_${decoder.fmri.name}.h5
-      - name: sub-YA
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/training_fmri/YA_${decoder.fmri.name}.h5
+          - .../C_${decoder.fmri.name}.h5
+      
 
     rois:
       - {name: V1,  select: ROI_standard_V1 = 1,  num: 500}
@@ -90,7 +37,7 @@ decoder:
   features:
     name: Alexnet
     paths:
-      - /flash/DoyaU/shuhei/bdata_decoding/features
+      - # path
     layers:
       - conv1
       - conv2
@@ -100,17 +47,17 @@ decoder:
       - fc6
       - fc7
       - fc8
-    index_file: /home/s/shuhei-hara1/workspace/decoding_bdata/feature_index_random1000.mat
+    index_file: # path to index file
 
 decoded_feature:
   name: deco_fmriprep_pyfastl2lir
-  path: /flash/DoyaU/shuhei/decoding_alexnet/Alexnet
+  path: # path
   parameters:
     average_sample: true
 
   decoder:
     name: ${decoder.features.name}
-    path: /flash/DoyaU/shuhei/decoding_alexnet
+    path: # path
     parameters:
       alpha: ${decoder.parameters.alpha}
       chunk_axis: ${decoder.parameters.chunk_axis}
@@ -118,69 +65,16 @@ decoded_feature:
   fmri:
     name: bayes_fmap_volume_standard_prep
     subjects:
-      - name: sub-DI
+      - name: sub-A
         paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/DI_${decoded_feature.fmri.name}.h5
-      - name: sub-FA
+          - .../A_${decoded_feature.fmri.name}.h5
+      - name: sub-B
         paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/FA_${decoded_feature.fmri.name}.h5
-      - name: sub-HH
+          - .../B_${decoded_feature.fmri.name}.h5
+      - name: sub-C
         paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/HH_${decoded_feature.fmri.name}.h5
-      - name: sub-HK
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/HK_${decoded_feature.fmri.name}.h5
-      - name: sub-HM
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/HM_${decoded_feature.fmri.name}.h5
-      - name: sub-KH
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/KH_${decoded_feature.fmri.name}.h5
-      - name: sub-KT
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/KT_${decoded_feature.fmri.name}.h5
-      - name: sub-MF
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/MF_${decoded_feature.fmri.name}.h5
-      - name: sub-MN
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/MN_${decoded_feature.fmri.name}.h5
-      - name: sub-MOt
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/MOt_${decoded_feature.fmri.name}.h5
-      - name: sub-MY
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/MY_${decoded_feature.fmri.name}.h5
-      - name: sub-MYa
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/MYa_${decoded_feature.fmri.name}.h5
-      - name: sub-NK
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/NK_${decoded_feature.fmri.name}.h5
-      - name: sub-NKu
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/NKu_${decoded_feature.fmri.name}.h5
-      - name: sub-RM
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/RM_${decoded_feature.fmri.name}.h5
-      - name: sub-SK
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/SK_${decoded_feature.fmri.name}.h5
-      - name: sub-SY
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/SY_${decoded_feature.fmri.name}.h5
-      - name: sub-TK
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/TK_${decoded_feature.fmri.name}.h5
-      - name: sub-TN
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/TN_${decoded_feature.fmri.name}.h5
-      - name: sub-TY
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/TY_${decoded_feature.fmri.name}.h5
-      - name: sub-YA
-        paths:
-          - /flash/DoyaU/shuhei/bdata_decoding/test/YA_${decoded_feature.fmri.name}.h5
+          - .../C_${decoded_feature.fmri.name}.h5
+      
     rois:
       - {name: V1,  select: ROI_standard_V1 = 1}
       - {name: V2,  select: ROI_standard_V2 = 1}
@@ -198,7 +92,7 @@ decoded_feature:
   features:
     name: Alexnet
     paths:
-      - /flash/DoyaU/shuhei/bdata_decoding/features_test_original
+      - # path
     layers:
       - conv1
       - conv2
