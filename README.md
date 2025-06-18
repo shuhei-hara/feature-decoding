@@ -11,9 +11,12 @@ The pipeline consists of the following steps:
 Download Data
 -------
 
-Build environment
+Requirements
 -------------
-
+This project primarily depends on the following libralies.
+• bdpy
+• fastl2lir
+Addiitonal dependencies may be required.
 
 Usage
 -------------

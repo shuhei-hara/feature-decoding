@@ -1,1 +1,0 @@
-from .openneuro import makedata
