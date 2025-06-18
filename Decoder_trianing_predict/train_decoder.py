@@ -22,6 +22,7 @@ from bdpy.util import makedir_ifnot
 from fastl2lir import FastL2LiR
 import numpy as np
 import yaml
+import scipy.stats
 
 # do : module load python/3.11.4
 
@@ -102,7 +103,6 @@ def featdec_fastl2lir_train(
     sbj = f'sub-{subject}'
     # for layer, sbj, roi in np.random.permutation(list(product(layers, fmri_data.keys(), rois.keys()))):
     for layer, roi in product(layers, rois.keys()):
-        # roi='LOC'
 
         print('--------------------')
         print('Layer:      %s' % layer)
@@ -142,7 +142,7 @@ def featdec_fastl2lir_train(
         brain_labels = get_labels_multi_bdatas(data_brain[sbj], label_key)
 
         feat_labels = brain_labels
-        feat = get_multi_features(data_features, layer, labels=feat_labels)
+        feat = get_multi_features(data_features, layer, labels=feat_labels)        
 
         feat_train = feat
 

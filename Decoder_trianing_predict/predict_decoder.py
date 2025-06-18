@@ -121,6 +121,7 @@ def featdec_fastl2lir_predict(
         brain = data_brain[sbj].select(rois[roi])
         brain_labels = data_brain[sbj].get_label(label_key)
 
+
         # Averaging brain data
         if average_sample:
             brain_labels_unique = np.unique(brain_labels)
