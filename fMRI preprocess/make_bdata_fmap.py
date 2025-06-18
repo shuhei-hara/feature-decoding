@@ -29,11 +29,11 @@ subject = args.subject
 # in `derivative` directory.
 # If it's left as 'None', the script automatically set it to '../bids'.
 
-bids_dir = ''
+bids_dir = path_to_bids
 
 # The output bdata will be saved here.
 
-output_dir = ''
+output_dir = path_to_output
 
 # Output data type can be:
 # - 'volume_native' (volume fMRI data in the individual brain)
@@ -92,10 +92,10 @@ exclude = {}
 #
 
 # roi_mask_native_dir = '<Path to the ROI mask directory (the mask should be resampled by the functional space)>'
-roi_mask_native_dir = ''
-roi_mask_standard_dir = ''
-roi_mask_native_resampled_dir = ''
-roi_label_surface_dir = ''
+roi_mask_native_dir = path_to_roi_mask_native_dir
+roi_mask_standard_dir = path_to_roi_mask_standard_dir
+roi_mask_native_resampled_dir = path_to_roi_mask_native_resampled_dir
+roi_label_surface_dir = path_to_roi_label_surface_dir
 
 rois_files = {
     # Native (individual) spaces
@@ -229,7 +229,7 @@ for output_data_type in output_data_type_list:
     print('----------------------------------------')
     print('Loading %s' % bids_dir)
     bdata_list, data_labels = create_bdata_fmriprep(bids_dir,
-                                                    fmriprep_dir='',
+                                                    fmriprep_dir=path_to_fmriprep,
                                                     data_mode=output_data_type_fix,
                                                     label_mapper=label_mapper,
                                                     exclude=exclude,
